@@ -1,0 +1,106 @@
+Dynamic programming is a technique for solving a problem that may at first inspection appear to be exponentially difficult.  It can often be applied in situations where optimisation is part of the goal  (find the biggest, longest, smallest, best, worst, shortest, etc ..).
+
+Optimality principle - the key question is whether the problem can be seen to submit to the principle of optimality, which exists when the optimal solution to a problem is comprised of an optimal solution to a slightly smaller problem plus a little bit of extra work that can be done in polynomial time.
+
+
+Consider the problem of, given some query string, trying to find the most similar string in a huge databse of strings.  An example of such a problem is trying to find the most similar gene (within a genetic database) to some novel sequence found in a sample of organic matter.
+
+String equality tests don't help because the query string is unlikely to be an exact match to something in the database.  And pattern searching doesn't help because we don't know which parts of the string will match and which will not.  One reasonable way to frame the matching criteria is to measure how many changes are needed to turn one string into another ... how many insertions and deletions.
+Minimum Edit Distance - the minimum edit distance between two strings is the least number of inserts and deletes required to turn one string into the other (and is the same both ways).  
+
+brute force - given two strings of length M and N, turning one into the other requires at least |M-N| inserts or deletes to compensate for the extra symbols in the longer one.  We might start, therefore, by removing all possible |M-N| combinations of symbols from the longer string to create a set of subsequences called the |M-N|_set for the longer string.  These are all the same length as the shorter string, and if one of them is identical then |M-N| is the minimum edit distance for the two original strings.  If no match exists, then at least one symbol must be removed from at least one of the |M-N|_set strings and one from the target string.  This gives us the 1_set for the target string and the |M-N|+1_set for the longer string.  If a match exists in these two sets then the MED is |M-N|+2.  If no match is found, then at least one more symbol must be removed from at least one member of the 1_set and of the |M-N|+1_set.  This repeats until the k_set and the |M-N|+k_set contain a common string, and the MED must be |M-N|+2k.  This is an exponential approach because it entails finding a subset of symbols in one string that is also a subset of the symbols in the other string, and there are exponentially many subsets (i.e. it is the subset selection problem).
+MED(X,Y) as a DP problem - if the length of a string X is N and the length of another string Y is M we can compute the MED of X and Y by considering longer and longer prefixes of X and Y and computing the solution in terms of shorter prefixes.  Consider d[i,j] as the MED for the first i symbols of X and the first j symbols of Y.  The following recursive relation holds:
+ for i=0 to N
+
+    for j=0 to M
+
+         d[i,j] = | j=0, i
+
+                    | i=0, j
+
+                    | X[i]=Y[j], d[i-1,j-1]
+
+                    | else   min (d[i-1][j-1]+2, d[i][j-1]+1, d[i-1][j] +1
+
+where the optimal solution for a problem of dimensions i and j is constructed from an optimal solution for smaller values of i and j.
+
+Knapsack problem - when this problem is expressed in a certain way, it submits to the optimality principle.  Imagine the problem is to fill a knapsack of a given volume with a subset of items taken from a finite set of types, where each type has a value and a volume.  Filling the knapsack in such a way as to maximize its total value entails putting in some last item of a given type, chosen so that the total value is optimum.  This can be computed by considering a knapsack whose volume has just enough room to add in this last type of object.  Whatever its value is, we can add the value of this last type to find the optimum value overall.  But we only do this if it improves the total value over what we already have computed for this size of knapsack, which we may have computed before we had this type of item to consider.  So, the optimum solution is either 1) the optimum computed for this size knapsack before considering this type of item, or 2) the optimum computed for a knapsack whose filled-volume leaves just enough room for one of these types of items, plus the value of this item.  Since both of these involve consulting previously computed solutions, a dynamic programming solution is possible.  The approach is to consider ever increasing volumes of knapsack (up to the size we actually have) and ever increasing types of objects (up to the number of types we ultimately have to choose from).  If the volume options and number of types of items are integers, then the computational complexity is polynomial.  But, in the general case, parameter values can be adjusted by any value, including very tiny real values .... in which case the polynomial run-time is illusory because the number of possible solutions increases without bound.  Thus, the runtime for the specific example of dynamic programming for the knapsack problem as presented in class (and oultined in the notes linked below) is said to be pseudo-polynomial.
+
+(old lecture notes link: see file attached below)
+
+Other problems:  longest common subsequence, longest incrementing subsequence, stacking boxes
+
+<html>
+<body>
+<pre>
+Dynamic Programming (Additional Notes)
+
+Minimum Edit Distance
+
+Given a string X of length m, and a string Y of length n, where X_i is
+the substring of X from positions 1 to i, and X[i] is the i-th letter
+of X, then we compute the minimum edit distance array d such that
+d[i][j] = MED(X_i,Y_j)
+
+Picture the two-dimensional array d with the characters of X indexed
+along the x-axis and the characters of Y indexed along the y-axis,
+with an extra row and column for the nul strings, then compute the
+following:
+
+for i=0 to m
+  for j=0 to n
+    d[i][j] = | j<1, i
+              | i<1, j
+              | X[i]==Y[j], d[i-1][j-1]
+              | X[i]!=Y[j], min(d[i-1][j-1]+2,d[i-1][j]+1,d[i][j-1]+1)
+
+If j is zero then we must delete all i characters from X, and if i is
+zero then we must add all characters from Y.  If both X and Y are
+non-null then it costs nothing to change the i-th character of X into
+the j-th character of Y because they are already the same so they may
+as well be considered as part of the LCS.  Otherwise we must delete
+the i-th character from X and insert the j-th character of Y at a cost
+of two added to the already calculated cost of editting X_i-1 into
+Y_j-1, or we must delete the i-th character of X at a cost of one to
+the already calculated cost of editting X_i-1 into Y_j, or we must
+insert the j-th character of Y at a cost of one to already calculated
+cost of editting X_i into Y_j-1; whichever of these three options is
+the cheapest.
+
+Knapsack Problem
+
+Given N different types of items, numbered from 1 to N, where the size
+and value of the i-th item is given in size[i] and value[i]
+respectively, we maximize the total haul in a knapsack of capacity M
+by computing the maximum haul in knapsacks from size 1 to M.  To
+calculate the maximum haul for a knapsack of a given size with N
+different items, we compute the maximum haul for that knapsack given 1
+to N different types of items.
+
+Assume there is only one type of item, then to calculate the maximum
+haul for knapsacks with volume 1 to N we simply see how many items we
+can fit in the knapsack and sum their value.  If there are two types
+of items, then we see if the total haul of adding this item to the
+value of a knapsack whose volume is smaller than the present volume by
+exactly the size of the item being considered is greater than the best
+haul we have already calculated for a knapsack of the present volume,
+and if it is then we add the item to the knapsack.  We always keep
+track of the last item we added for a knapsack of a given volume.  In
+this way we can list the items we should add to a knapsack of size M
+by first listing the best item to add to a knapsack of volume M and
+then listing all of the best items added to a knapsack of volume
+M-(size of the best item to add to a knapsack of volume M)
+
+for item=1 to N
+  for vol=0 to M
+    if vol>=size[item]
+      if(h[vol-size[item]][item]+value[item] > h[vol][item]
+        then
+             h[vol][item]=h[vol-size[item]][item]+value[item]
+             best2add[vol]=item
+
+
+
+</pre>
+</body>
+</html>
