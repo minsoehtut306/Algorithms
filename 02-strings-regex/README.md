@@ -2,63 +2,29 @@
 
 - **02-strings-regex** — regex → FSM engine, KMP/string matching, automata notes
 
-## Features
-Supported regex syntax:
-
-```
-expression - term ('|' term)*
-term       - factor+
-factor     - base ('*' | '+' | '?')*
-base       - literal | '.' | '(' expression ')' | '\' escaped_char
-```
-
-- Literals
-- Alternation `|`
-- Kleene star `*`
-- One-or-more `+`
-- Optional `?`
-- Grouping `(...)`
-- Escapes `\., \|, \(, \), ...`
-- Wildcard `.`
-
-> Grammar support reflects the engine used by `REcompile`; see source for edge‑case behavior.
-
-
 ## How to run
 Compile both files:
 ```bash
-javac REcompile.java REresearch.java
+javac KMPsearch.java
+java KMPsearch "target" filename.txt
 ```
+### Example:
 
-### 1) Compile a regex only
-```bash
-java REcompile "your_regex_here"
-```
+An example of usage for the program with just a target substring is as follows:
 
-**Examples**
-```bash
-java REcompile z
-java REcompile "j|z"
-java REcompile "aardvark|zebra"
-```
+   % java KMPsearch "kokako"
 
-### 2) To run REcompile and REsearch together:
-```bash
-java REcompile "your_regex_here" | java REresearch input.txt
-```
-**Examples**
-```bash
-java REcompile z | java REsearch simple.txt
-java REcompile "j|z" | java REsearch simple.txt
-java REcompile "aardvark|zebra" | java REsearch simple.txt
-```
+which computes the skip array for "kokako" and prints it as the following five lines to standard output:
 
-### 3) Search from stdin
-```bash
-java REcompile "pattern" | java REsearch
-# then type/paste lines and press Ctrl+D (Unix/macOS) or Ctrl+Z Enter (Windows) to end input
-```
----
+*,k,o,k,a,k,o
+
+a,1,2,3,0,5,6
+
+k,0,1,0,3,0,5
+
+o,1,0,3,2,5,0
+
+*,1,2,3,4,5,6
 
 ### Note
 

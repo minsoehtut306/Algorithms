@@ -1,5 +1,3 @@
-// Min Soe Htut - 1631938
-// Last modified: 16 May 2025
 import java.util.*;
 
 /**
