@@ -1,3 +1,5 @@
+
+
 ## Problem Overview
 
 Each box is defined by three integers representing its **dimensions** (height, width, depth).  
@@ -58,8 +60,13 @@ java NPCStack boxes.txt 100 1.0
 ### Output Format
 
 The program prints the final stacked boxes from **top to bottom**, each line showing:
-width depth height cumulativeStackHeight
 
+```
+width depth height cumulativeStackHeight
+```
+
+**Example Output**
+```
 Improved stack height: 1550
 Final stack (top to bottom):
 66 69 93 1550
@@ -82,8 +89,9 @@ Final stack (top to bottom):
 4 20 68 210
 3 17 97 142
 2 5 45 45
-
+```
 ---
+
 ## Notes
 - Input validation ensures only valid, positive box dimensions are processed.
 - Works on Linux or any Java-supported OS (tested on R Block lab machines).
