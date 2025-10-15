@@ -1,4 +1,4 @@
-
+# Heuristic Box Stacking — Simulated Annealing
 
 ## Problem Overview
 
@@ -55,6 +55,7 @@ java NPCStack <filename> <temperature> <coolingRate>
 ```bash
 java NPCStack boxes.txt 100 1.0
 ```
+
 ---
 
 ### Output Format
@@ -90,11 +91,10 @@ Final stack (top to bottom):
 3 17 97 142
 2 5 45 45
 ```
+
 ---
 
-## Notes
-- Input validation ensures only valid, positive box dimensions are processed.
-- Works on Linux or any Java-supported OS (tested on R Block lab machines).
+### Note
 
 This project was completed as part of the Bachelor of Computer Science degree at the University of Waikato.  
 It is published here solely for educational and portfolio purposes, to showcase my skills in software development.  

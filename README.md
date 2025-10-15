@@ -1,20 +1,36 @@
-# Algorithms Portfolio
+# Algorithms and Pattern Search — Java Implementations
 
-Curated highlights from **Design & Analysis of Algorithms**, focusing on sorting, strings/regex, graph search, dynamic programming, and complexity.
-This is a portfolio selection of code and documen.
+This repository contains a collection of Java-based algorithmic projects developed as part of the **Bachelor of Computer Science** at the **University of Waikato**.  
+Each project explores a key concept in algorithm design and optimization, focusing on efficient data processing, search, and problem-solving techniques.
 
-## Structure
-- **01-sorting** — merge/quick/heap/adaptive sorting and analysis
-- **02-strings-regex** — regex → FSM engine, KMP/string matching, automata notes
-- **03-search-graphs** — BFS/DFS, shortest paths, MST, topological ordering
-- **04-dynamic-programming** — classic DP (knapsack, LCS, edit distance)
-- **05-complexity** — NP-completeness, reductions, hardness
-- **06-data-structures** — heaps, PQs, union-find (if present)
-- **07-backtracking** — backtracking/branch-and-bound (if present)
+---
 
-## How to run
-- **Java** sources: `javac *.java` then `java <MainClass>`.
-- Text/PDF files include problem specs, notes, or analysis.
+## Included Projects
+
+### 1. External Balanced Sort Merge — XSort
+Implements an **external sorting algorithm** for large text files using **Heapsort** for initial runs and a **Balanced k-way Sort Merge** for merging.  
+Demonstrates file-based sorting similar to the Linux `sort` command.
+
+### 2. Knuth–Morris–Pratt (KMP) String Search — KMPsearch
+Efficient substring search algorithm using a **failure (skip) table** to avoid redundant comparisons.  
+Supports both file search mode and skip table display mode.
+
+### 3. Regular Expression FSM Compiler & Search — REcompile & REsearch
+Implements a **regexp-to-FSM compiler** and a corresponding **pattern searcher**.  
+The compiler translates a regular expression into a finite state machine, while the searcher finds all matching lines in a text file.
+
+### 4. Heuristic Box Stacking — NPCStack
+Applies a **simulated annealing** optimization algorithm to build the tallest possible stack of boxes under strict dimensional constraints.  
+Demonstrates heuristic search and probabilistic optimization.
+
+---
+
+## Languages & Environment
+
+- **Language:** Java  
+- **Tested Environment:** Linux
+- **Compilation:** `javac *.java`  
+- **Execution:** `java <MainClass> [arguments]`  
 
 ---
 
